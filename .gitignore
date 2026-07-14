@@ -1,0 +1,49 @@
+venv310/
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+.eggs/
+.idea/
+.vscode/
+.pytest_cache/
+*.log
+*.sqlite3
+data/raw/
+data/build/
+results/
+results_training/
+*.pt
+*.pth
+*.safetensors
+*.ckpt
+.DS_Store
+/.mypy_cache/
+# Local environment files and virtual environments
+.env
+.env.*
+venv/
+env/
+.venv/
+
+# Files you requested to keep out of GitHub
+compare.txt
+guardrails_plan.md
+implementatio_phase3.md
+
+# Python cache and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Large model artifacts
+layer2_classifier/model/layer2_model_final/*.safetensors
+layer2_classifier/model/layer2_model_final/*.bin
+layer2_classifier/model/layer2_model_final/*.bin
+
