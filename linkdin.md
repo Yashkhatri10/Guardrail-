@@ -1,0 +1,8 @@
+I built an LLM guardrail pipeline to detect jailbreaks and prompt injections — and the most useful thing I found wasn't a feature, it was a mistake.
+Layer 1: fast regex rules. Layer 2: a fine-tuned classifier. Layer 3: an LLM acting as a judge to catch what the others missed.
+Except Layer 3 didn't work. I tested it across three different LLM providers (Gemini, NVIDIA-hosted Llama, and tried Anthropic). All three did the same thing: when given a jailbreak prompt to classify, they answered it instead — like a assistant, not a judge. Turns out this is a known, structural problem: safety-tuned chat models override classification instructions exactly on the inputs that matter most.
+I swapped in a purpose-built classifier instead. That fixed the judge problem — and created a new one. It started flagging harmless roleplay prompts ("pretend to be a wise old sensei") as attacks, at 99%+ confidence. Feeding that into the full pipeline made things worse than any single layer alone — false positive rate jumped to 55%.
+After fixing that, my final numbers: 97.9% precision, 85.6% recall, 1.6% false positive rate on a held-out test set the model never saw during training.
+The finding I didn't expect: stacking layers isn't automatically better. My three-layer pipeline still doesn't beat my single fine-tuned classifier on recall — it trades ~12 points of recall for a small precision gain. That's a real tradeoff, not a bug, and which one you'd want depends on whether you care more about missing an attack or blocking a real user.
+Full write-up + code: [link]
+Curious how others building guardrail systems have handled the LLM-as-judge problem — did you hit the same wall, or find a workaround I didn't try?

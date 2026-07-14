@@ -1,0 +1,20 @@
+policies:
+  layer1_match:
+    action: block
+    reason: "deterministic rule match"
+
+  layer2_attack:
+    threshold: 0.85
+    action: block
+
+  layer2_uncertain:
+    threshold_below: 0.85
+    action: escalate_to_layer3
+
+  layer3_injection:
+    threshold: 0.999
+    action: escalate_for_review
+    reason: "layer3 alone is not sufficient for a hard block; require layer1 or layer2 agreement"
+
+  default:
+    action: allow
